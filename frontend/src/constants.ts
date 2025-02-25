@@ -1,0 +1,1 @@
+export const serviceUrl:string = import.meta.env.VITE_SERVICE_URL ?? "http://localhost:8080"

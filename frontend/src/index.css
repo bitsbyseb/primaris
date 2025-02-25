@@ -1,0 +1,30 @@
+@import "tailwindcss";
+:root {
+    --color-primary:#1B1B1B;
+    --color-secondary:#79D2CE
+}
+
+@theme {
+    --color-primary:#1B1B1B;
+    --color-secondary:#79D2CE
+}
+
+.action-button {
+    @apply text-xl font-bold py-2 text-primary bg-secondary border-4 px-2 active:border-secondary active:text-secondary active:bg-primary cursor-pointer active:scale-110 rounded-lg;
+}
+
+input[type="file"] {
+    color:white;
+}
+
+input[type="file"]::file-selector-button {
+    background:var(--color-secondary);
+    padding: 10px;
+    font-weight: bold;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:active {
+    transform: scale(1.1);
+}

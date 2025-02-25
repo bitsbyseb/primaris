@@ -1,0 +1,14 @@
+{
+  "name": "primaris",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces":["frontend/","backend/"],
+  "scripts": {
+    "dev:backend": "cd ./backend && deno run start",
+    "dev:frontend":"cd ./frontend && node --run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

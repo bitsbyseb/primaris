@@ -1,0 +1,14 @@
+{
+  "imports": {
+    "@types/mime-types": "npm:@types/mime-types@^2.1.4",
+    "hono": "jsr:@hono/hono@^4.6.19",
+    "mime-types": "npm:mime-types@^2.1.35"
+  },
+  "tasks": {
+    "start": "deno run --watch --env-file -A ./src/main.ts"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  }
+}
