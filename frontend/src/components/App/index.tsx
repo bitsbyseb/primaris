@@ -16,7 +16,7 @@ function App() {
   const { directory, openSearch,quickView } = context;
   return (
     <div className='w-full min-h-screen bg-primary flex flex-col items-center space-y-5 pt-10'>
-      <h2 className='text-4xl text-secondary font-bold'>Home Cloud</h2>
+      <h2 className='text-4xl text-secondary font-bold'>Primaris</h2>
       <Controls />
 
       {
