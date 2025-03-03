@@ -4,7 +4,7 @@
   "main": "index.js",
   "workspaces":["frontend/","backend/"],
   "scripts": {
-    "dev:backend": "cd ./backend && deno run start",
+    "dev:backend": "cd ./backend && node --run dev",
     "dev:frontend":"cd ./frontend && node --run dev"
   },
   "keywords": [],

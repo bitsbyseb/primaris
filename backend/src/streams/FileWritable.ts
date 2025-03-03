@@ -1,7 +1,7 @@
-import { AbortedStream } from "../errors/errors.ts";
-
+import { AbortedStream } from "../errors/errors.js";
+import * as fs from 'node:fs';
 export class FileWritable extends WritableStream {
-  private file: Deno.FsFile | undefined;
+  private file:  Buffer | undefined;
   private data:Uint8Array | undefined;
   constructor(public uploadPath: string | URL) {
     super({
@@ -12,17 +12,13 @@ export class FileWritable extends WritableStream {
       },
       close:() => {
         if (this.file && this.data) {
-          this.file.write(this.data);
+          this.file.write(this.data.toString());
         }
       },
       abort:() => {
         throw new AbortedStream("Stream Aborted");
       }
     });
-    this.file = Deno.openSync(uploadPath, {
-      createNew: true,
-      write: true,
-      append: true,
-    });
+    this.file = fs.readFileSync(uploadPath);
   }
 }

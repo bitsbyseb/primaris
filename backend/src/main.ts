@@ -1,16 +1,18 @@
-import { allowedOrigins, storageFolder } from "./constants.ts";
-import { FileWritable } from "./streams/FileWritable.ts";
-import { sanitizePath } from "./utils/sanitizePath.ts";
-import { FileRouter } from "./FileRouter/router.ts";
-import { NotHttpParams } from "./errors/errors.ts";
-import { errors } from "./middlewares/errors.ts";
-import { serveStatic } from "hono/deno";
+import { allowedOrigins, storageFolder } from "./constants.js";
+import { FileWritable } from "./streams/FileWritable.js";
+import { sanitizePath } from "./utils/sanitizePath.js";
+import { FileRouter } from "./FileRouter/router.js";
+import { NotHttpParams } from "./errors/errors.js";
+import { errors } from "./middlewares/errors.js";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { join } from "node:path";
 import { cors } from "hono/cors";
 import mime from "mime-types";
 import { Hono } from "hono";
-const app = new Hono();
+import { readFile } from "node:fs/promises";
+import { serve } from "@hono/node-server";
 
+const app = new Hono();
 app.use(
   "/*",
   cors({
@@ -27,11 +29,8 @@ app.use(
 app.use("/js/index.js", serveStatic({ path: "./src/static/js/index.js" }));
 
 app.get("/",async (c) => {
-  return c.html(
-    await Deno.readTextFile(
-      join(Deno.cwd(), "src", "static", "views", "index.html"),
-    ),
-  );
+  const htmlContent = await readFile(join(process.cwd(), "src", "static", "views", "index.html"));
+  return c.html(htmlContent.toString());
 });
 
 app.post("/upload", async (c) => {
@@ -49,9 +48,10 @@ app.post("/upload", async (c) => {
   const processedFiles = await Promise.all(
     fileArray.map(async (file) => {
       if (!(file instanceof File)) {
-        throw new Deno.errors.InvalidData(
-          "The files are not supported by its formats",
-        );
+        // TODO: create a new error instance
+        // throw new InvalidData(
+        //   "The files are not supported by ijs formajs",
+        // );
       }
       const safeFolder = sanitizePath(join(path, file.name));
       const fileStream = new FileWritable(join(storageFolder, safeFolder));
@@ -74,14 +74,19 @@ app.get("/download", async (c) => {
   }
   console.log(path);
   const safePath = sanitizePath(join(path));
-  const file = await Deno.readFile(join(storageFolder, safePath));
-  const mimeType = mime.lookup(safePath);
-  return c.body(file, 202, {
+  const file = await readFile(join(storageFolder, safePath));
+  const mimeType = mime.lookup(safePath) || "text";
+  return c.body(file as any, 202, {
     "Content-Disposition": `attachment; filename=${safePath}`,
-    "Content-Type": mimeType,
+    "Content-Type":mimeType
   });
 });
 
 app.route("/file", FileRouter);
 
-Deno.serve(app.fetch);
+serve({
+  fetch:app.fetch,
+  port:8000
+},(info) => {
+  console.log(`Server is running on http://localhost:${info.port}`)
+});
