@@ -2,10 +2,11 @@
   "name": "primaris",
   "version": "1.0.0",
   "main": "index.js",
-  "workspaces":["frontend/","backend/"],
+  "private":true,
+  "workspaces":["apps/*"],
   "scripts": {
-    "dev:backend": "cd ./backend && node --run dev",
-    "dev:frontend":"cd ./frontend && node --run dev"
+    "dev:backend": "cd ./apps/backend && node --run dev",
+    "dev:frontend":"cd ./apps/frontend && node --run dev"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,17 @@
+{
+    "name": "backend",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch --env-file=.env src/main.ts"
+    },
+    "dependencies": {
+        "@hono/node-server": "1.13.8",
+        "@types/mime-types": "2.1.4",
+        "hono": "4.7.2",
+        "mime-types": "2.1.35"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.17",
+        "tsx": "4.7.1"
+    }
+}
