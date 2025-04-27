@@ -5,13 +5,15 @@
         "dev": "tsx watch --env-file=.env src/main.ts"
     },
     "dependencies": {
+        "@hapi/boom": "^10.0.1",
         "@hono/node-server": "1.13.8",
         "@types/mime-types": "2.1.4",
         "hono": "4.7.2",
-        "mime-types": "2.1.35"
+        "mime-types": "2.1.35",
+        "zod": "^3.24.3"
     },
     "devDependencies": {
         "@types/node": "20.11.17",
-        "tsx": "4.7.1"
+        "tsx": "^4.19.3"
     }
 }

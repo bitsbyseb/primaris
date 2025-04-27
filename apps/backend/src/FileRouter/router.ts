@@ -1,19 +1,19 @@
 import { Hono } from "hono";
 import { join } from "node:path";
-import { NotHttpParams } from "../errors/errors.js";
-import { sanitizePath } from "../utils/sanitizePath.js";
-import { storageFolder } from "../constants.js";
+import * as boom from '@hapi/boom';
+import { sanitizePath } from "../utils/sanitizePath.ts";
 import { mkdir, readdir, readFile, rmdir } from "node:fs/promises";
-import { isFile } from "../utils/isFile.js";
-import type { FileModel } from "../models/File.model.js";
+import { isFile } from "../utils/isFile.ts";
+import type { FileModel } from "../models/File.model.ts";
 
 const app = new Hono();
+const storageFolder = process.env.storageFolder;
 
 app.get("/cat",async (c) => {
   const path = c.req.header("X-File-Path");
   console.log(path);
   if (!path) {
-    throw new NotHttpParams("No path sended");
+    throw boom.badRequest("path is mandatory");
   }
   const safePath = sanitizePath(path);
   const content = await readFile(join(storageFolder, safePath));
@@ -26,7 +26,7 @@ app.post("/mkdir", async (c) => {
   const dirName = c.req.query("dirName");
   const destiny = c.req.header("X-File-Path");
   if (!destiny || !dirName) {
-    throw new NotHttpParams("no directory or path destiny sended");
+    throw boom.badRequest("no directory or path destiny sended");
   }
   const safePath = sanitizePath(join(destiny,dirName));
   const finalPath = join(storageFolder,safePath);
@@ -41,7 +41,7 @@ app.post("/mkdir", async (c) => {
 app.get("/ls",async (c) => {
   const directory = c.req.header("X-File-Path");
   if (!directory) {
-    throw new NotHttpParams("no path sended");
+    throw boom.badRequest("no path sended");
   }
   const safePath = sanitizePath(directory);
   const content = await readdir(join(storageFolder,safePath));
@@ -62,7 +62,7 @@ app.delete("/rmdir", async (c) => {
   const dirName = c.req.query("dirName");
   const destiny = c.req.header("X-File-Path");
   if (!destiny || !dirName) {
-    throw new NotHttpParams("no directory or path destiny sended");
+    throw boom.badRequest("no directory or path destiny sended");
   }
   const safePath = sanitizePath(join(destiny,dirName));
   const finalPath = join(storageFolder,safePath);
@@ -78,7 +78,7 @@ app.delete("/rm", async (c) => {
   const filename = c.req.query("filename");
   const destiny = c.req.header("X-File-Path");
   if (!filename || !destiny) {
-    throw new NotHttpParams("no filename or path were specified");
+    throw boom.badRequest("no filename or path was specified");
   }
 
   const safePath = sanitizePath(join(destiny,filename));

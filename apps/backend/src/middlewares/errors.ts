@@ -1,7 +1,10 @@
 import type { ErrorHandler } from "hono";
-import { AbortedStream, NotHttpParams } from "../errors/errors.js";
+import {isBoom} from '@hapi/boom';
+import { AbortedStream } from "../errors/errors.ts";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 export const errors: ErrorHandler = (error, c) => {
+  console.error(error);
   // FIXME: create an instance for all this conditions
   // if (error instanceof NotFound) {
   //   return c.json({
@@ -20,22 +23,24 @@ export const errors: ErrorHandler = (error, c) => {
   //     error: "the resource is not a directory",
   //   }, { status: 400 });
   // }
-
+  
   // if (error instanceof AlreadyExists) {
-  //   return c.json({
-  //     error: "The resource already exists",
-  //   }, 400);
-  // }
+    //   return c.json({
+      //     error: "The resource already exists",
+      //   }, 400);
+      // }
+      
+  if (isBoom(error)) {
+    const statusCode = error.output.statusCode as ContentfulStatusCode;
+    const message = error.output.payload.message;
+    return c.json({
+      error:message
+    },error.output.statusCode as ContentfulStatusCode);
+  }
 
-  // if (error instanceof AbortedStream) {
-  //   return c.json({ message: "internal server error" }, 500);
-  // }
-
-  // if (error instanceof NotHttpParams) {
-  //   return c.json({
-  //     error: error.msg,
-  //   }, 400);
-  // }
-  console.error(error);
+  if (error instanceof AbortedStream) {
+    return c.json({ error: "internal server error" }, 500);
+  }
+  
   return c.json({ error: "internal server error" }, 500);
 };
