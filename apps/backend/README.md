@@ -1,3 +1,3 @@
 ```
-deno task start
+npm run dev --workspace=backend
 ```
