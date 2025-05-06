@@ -30,7 +30,7 @@ export class FileService {
         anchorID: string,
     ):Promise<void> {
         try {
-            const res = await fetch(serviceUrl + "/download", {
+            const res = await fetch(serviceUrl + "/file/download", {
                 method: "GET",
                 headers: {
                     "X-File-Path": path+filename,
@@ -79,7 +79,7 @@ export class FileService {
     static async uploadFile(path: string, form: HTMLFormElement):Promise<void> {
         try {
             const data = new FormData(form);
-            await fetch(serviceUrl + "/upload", {
+            await fetch(serviceUrl + "/file/upload", {
                 method: "POST",
                 body: data,
                 headers: {
@@ -122,7 +122,7 @@ export class FileService {
         try {
             const { filename, path, isTextFile} =
                 getFileParams;
-            const res = await fetch(serviceUrl + "/download", {
+            const res = await fetch(serviceUrl + "/file/download", {
                 method: "GET",
                 headers: {
                     "X-File-Path": path + filename,

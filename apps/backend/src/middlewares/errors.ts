@@ -35,7 +35,7 @@ export const errors: ErrorHandler = (error, c) => {
     const message = error.output.payload.message;
     return c.json({
       error:message
-    },error.output.statusCode as ContentfulStatusCode);
+    },statusCode);
   }
 
   if (error instanceof AbortedStream) {

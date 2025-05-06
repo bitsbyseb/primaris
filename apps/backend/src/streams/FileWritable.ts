@@ -1,24 +1,31 @@
 import { AbortedStream } from "../errors/errors.js";
-import * as fs from 'node:fs';
+import * as fs from "node:fs";
+
 export class FileWritable extends WritableStream {
-  private file:  Buffer | undefined;
-  private data:Uint8Array | undefined;
+  private fileStream: fs.WriteStream;
+
   constructor(public uploadPath: string | URL) {
+    let fileStream: fs.WriteStream;
+
     super({
-      write: (chunk) => {
-        if (this.file && !this.data) {
-        this.data = chunk;
-        }
+      write(chunk) {
+        return new Promise<void>((resolve, reject) => {
+          fileStream.write(chunk, (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
       },
-      close:() => {
-        if (this.file && this.data) {
-          this.file.write(this.data.toString());
-        }
+      close() {
+        fileStream.end();
       },
-      abort:() => {
-        throw new AbortedStream("Stream Aborted");
-      }
+      abort(reason) {
+        fileStream.destroy();
+        throw new AbortedStream("Stream Aborted: " + reason);
+      },
     });
-    this.file = fs.readFileSync(uploadPath);
+
+    fileStream = fs.createWriteStream(uploadPath);
+    this.fileStream = fileStream;
   }
 }
