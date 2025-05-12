@@ -4,8 +4,6 @@ import { Hono } from "hono";
 import { token } from "../../middlewares/token.ts";
 
 const app = new Hono();
-app.use("*",token);
-
 
 function getFileData(path:string) {
   const noSlash = path.split('/');
@@ -19,7 +17,7 @@ function getFileData(path:string) {
 }
 
 
-app.post("/upload", async (c) => {
+app.post("/upload",token,async (c) => {
   const path = c.req.header("X-File-Path");
   const body = await c.req.parseBody();
   const files = body["files[]"];
@@ -38,7 +36,7 @@ app.post("/upload", async (c) => {
   return c.json({ message: "files uploaded", files: processedFiles }, 200);
 });
 
-app.get("/download", async (c) => {
+app.get("/download",token, async (c) => {
   const path = c.req.header("X-File-Path");
   if (!path) {
     throw boom.badRequest("no path specified");
@@ -55,7 +53,7 @@ app.get("/download", async (c) => {
   });
 });
 
-app.post("/mkdir", async (c) => {
+app.post("/mkdir",token, async (c) => {
   const dirName = c.req.query("dirName");
   const destiny = c.req.header("X-File-Path");
   if (!destiny || !dirName) {
@@ -70,7 +68,7 @@ app.post("/mkdir", async (c) => {
   }, 201);
 });
 
-app.get("/ls", async (c) => {
+app.get("/ls",token, async (c) => {
   const directory = c.req.header("X-File-Path");
   if (!directory) {
     throw boom.badRequest("no path sended");
@@ -82,7 +80,7 @@ app.get("/ls", async (c) => {
   return c.json(info, { status: 200 });
 });
 
-app.delete("/rmdir", async (c) => {
+app.delete("/rmdir",token, async (c) => {
   const dirName = c.req.query("dirName");
   const destiny = c.req.header("X-File-Path");
 
@@ -98,7 +96,7 @@ app.delete("/rmdir", async (c) => {
   }, 202);
 });
 
-app.delete("/rm", async (c) => {
+app.delete("/rm",token, async (c) => {
   const filename = c.req.query("filename");
   const destiny = c.req.header("X-File-Path");
   if (!filename || !destiny) {

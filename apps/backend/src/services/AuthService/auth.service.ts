@@ -80,7 +80,7 @@ User.init({
 });
 
 await sequelize.sync(
-    { force: true },
+    // { force: true },
 );
 
 function retrievePublicUserData(user:User):PublicUserAttributes {

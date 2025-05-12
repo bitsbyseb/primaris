@@ -5,15 +5,13 @@ import * as boom from '@hapi/boom';
 
 
 const app = new Hono();
-app.use("*",token,verifyAdmin);
 
-
-app.get('/users',async (c) => {
+app.get('/users',token,verifyAdmin,async (c) => {
     const users = await AuthService.getAllUsers();
     return c.json(users,200);
 });
 
-app.delete('/user',async (c) => {
+app.delete('/user',token,verifyAdmin,async (c) => {
     const userData:Partial<PublicUserAttributes | undefined> = await c.req.json();
     if (!userData) {
         throw boom.badData("user data is missing");
