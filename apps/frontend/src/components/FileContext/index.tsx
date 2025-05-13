@@ -44,6 +44,7 @@ export function ContextProvider({ children }: ContextProviderParams) {
   useEffect(() => {
     fetch('http://localhost:8000/file/ls', {
       method: 'GET',
+      credentials:'include',
       headers: {
         "X-File-Path": path
       }

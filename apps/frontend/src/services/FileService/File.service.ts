@@ -32,6 +32,7 @@ export class FileService {
         try {
             const res = await fetch(serviceUrl + "/file/download", {
                 method: "GET",
+                credentials:'include',
                 headers: {
                     "X-File-Path": path+filename,
                 },
@@ -62,6 +63,7 @@ export class FileService {
         try {
             await fetch(`${serviceUrl}/file/mkdir?dirName=${dirName}`, {
                 method: "POST",
+                credentials:'include',
                 headers: {
                     "X-File-Path": path,
                 },
@@ -81,6 +83,7 @@ export class FileService {
             const data = new FormData(form);
             await fetch(serviceUrl + "/file/upload", {
                 method: "POST",
+                credentials:'include',
                 body: data,
                 headers: {
                     "X-File-Path": path,
@@ -124,6 +127,7 @@ export class FileService {
                 getFileParams;
             const res = await fetch(serviceUrl + "/file/download", {
                 method: "GET",
+                credentials:'include',
                 headers: {
                     "X-File-Path": path + filename,
                 },
@@ -148,6 +152,7 @@ export class FileService {
                     serviceUrl + "/file/rmdir?dirName=" + file.name,
                     {
                         method: "DELETE",
+                        credentials:'include',
                         headers: {
                             "X-File-Path": path,
                         },
@@ -157,6 +162,7 @@ export class FileService {
             }
             await fetch(serviceUrl + "/file/rm?filename=" + file.name, {
                 method: "DELETE",
+                credentials:'include',
                 headers: {
                     "X-File-Path": path,
                 },
