@@ -1,13 +1,16 @@
 import { ContextProvider } from './components/FileContext/index.tsx';
-import App from './components/App/index.tsx'
-import { createRoot } from 'react-dom/client'
-import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client';
+import { StrictMode } from 'react';
 import './index.css';
-createRoot(document.getElementById('root')!).render(
+import { AuthProvider } from './contexts/AuthContext';
+import { RouterComponent } from './routes';
 
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ContextProvider>
-      <App />
-    </ContextProvider>
+    <AuthProvider>
+      <ContextProvider>
+        <RouterComponent />
+      </ContextProvider>
+    </AuthProvider>
   </StrictMode>,
 )

@@ -8,15 +8,18 @@ import { AuthRouter } from "./routers/AuthRouter/router.ts";
 import { AdminRouter } from "./routers/AdminRouter/router.ts";
 
 const app = new Hono();
+
 app.use(
   "*",
   cors({
-    origin: "*",
+    origin: "http://localhost:5174",
     allowMethods:["GET","POST","PUT","DELETE","PATCH"],
-    credentials:false,
-    allowHeaders: ['Content-Type', 'Authorization','X-File-Path']
+    credentials:true,
+    allowHeaders: ['Content-Type', 'Authorization','X-File-Path'],
+    exposeHeaders:['Set-Cookie']
   }),
 );
+
 app.onError(errors);
 
 app.route("/auth",AuthRouter);

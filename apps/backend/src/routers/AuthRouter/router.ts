@@ -41,16 +41,21 @@ app.post('/login',async (c) => {
         httpOnly:true, // this cookie can only be read by from the server
         // secure: true
         // sameSite:true
+        sameSite:'Lax',
+        path:'/',
         maxAge:1000 * 60 * 60
     });
 
     setCookie(c,"refresh_token",refreshToken,{
-        httpOnly:true
+        httpOnly:true,
+        sameSite:'Lax',
+        path:'/',
+        maxAge:1000 * 60 * 60
     });
     return c.json(user,200);
 });
 
-app.post('/logout',token,async (c) => {
+app.post('/logout',async (c) => {
     deleteCookie(c,'access_token');
     deleteCookie(c,'refresh_token');
     return c.json({message:"logout successful"},200)
@@ -91,9 +96,16 @@ app.post('/refresh',async (c) => {
 
     setCookie(c,"access_token",newAccessToken,{
         httpOnly:true,
+        sameSite:'Lax',
+        path:'/',
         maxAge:1000 * 60 * 60
     });
     return c.json(foundUser,202);
+});
+
+app.get('/check',token,async (c) => {
+    const userData = c.get("session" as never);
+    return c.json(userData as jwt.JwtPayload,200);
 });
 
 // app.get('/protected',async (c) => {
