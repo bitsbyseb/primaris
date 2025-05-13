@@ -4,8 +4,7 @@
 Primaris lets you set up a tiny and simple home cloud service, it is built for develovers due to its focusing on code preview, you can upload any file by the way, i'll be working on future other preview services for files such like PDF, word, excel, power point,etc.
 
 ## Steps to set up the environment
-Ensure you have nodejs and denojs installed for this project.
-**Disclaimer** i know that it isn't a good practice the fact of using two runtimes in the same project, i started the project from the backend in HonoJS using Denojs, and then i created the frontend using vite because i didn't find something like i wanted in deno environment, i'll try to use neither deno or nodejs.
+Ensure you have nodejs installed for this project.
 
 first of all execute the next command on each folder:
 ```
