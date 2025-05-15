@@ -1,0 +1,20 @@
+[33m886d114[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: commit: [ADDED] Authentication pages in frontend
+[33m6de920d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit: documentation
+[33m0379b01[m HEAD@{2}: commit: include credentials
+[33m0ec56de[m HEAD@{3}: commit: POO classes
+[33m0207a6d[m HEAD@{4}: commit: middlewares
+[33m035098b[m HEAD@{5}: reset: moving to HEAD
+[33m035098b[m HEAD@{6}: pull: Fast-forward
+[33m9e64f17[m HEAD@{7}: commit: [ADDED] Authentication using JWT
+[33m0ea64a0[m HEAD@{8}: commit: [ADDED] new errors handling using @hapijs/boom
+[33m2f68c7c[m HEAD@{9}: commit: [ADDED] new monorepo configuration
+[33m9873a3b[m HEAD@{10}: reset: moving to HEAD
+[33m9873a3b[m HEAD@{11}: reset: moving to HEAD
+[33m9873a3b[m HEAD@{12}: reset: moving to HEAD~1
+[33m01f4b6b[m HEAD@{13}: reset: moving to HEAD
+[33m01f4b6b[m HEAD@{14}: reset: moving to 01f4
+[33m01f4b6b[m HEAD@{15}: reset: moving to HEAD
+[33m01f4b6b[m HEAD@{16}: commit: [ADDED] new monorepo configuration
+[33m9873a3b[m HEAD@{17}: commit: turning backend into nodejs due workspaces compatibility
+[33m11a9429[m HEAD@{18}: commit: docs
+[33mf4aa819[m HEAD@{19}: commit (initial): first commit and project initialization

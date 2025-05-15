@@ -20,7 +20,7 @@ function Index({ isDirectory,filename, anchorID, instance }: FileProps) {
     if (context) {
         const {setCurrentFilename,setQuickView,path,setPath,update,setUpdate} = context;
         return (
-            <div className='w-[28rem] h-24 border-2 border-secondary flex justify-between items-center rounded-lg gap-5 px-5' key={filename}>
+            <div className='max-w-[28rem] h-24 border-2 border-secondary flex justify-between items-center rounded-lg gap-5 px-5' key={filename}>
                 <div className='w-auto h-full flex items-center justify-between'>
                     <div className="image w-1/3 h-full text-secondary text-7xl grid place-items-center">
                         {
@@ -54,8 +54,8 @@ function Index({ isDirectory,filename, anchorID, instance }: FileProps) {
                     }
                     <div className="remove w-full h-1/2 grid place-items-center">
                         <button className='text-secondary cursor-pointer active:scale-110' onClick={async () => {
-                            const response = prompt("are you sure you want to delete this resource?");
-                            if (response?.toLocaleLowerCase() === "no" || !response) {
+                            const response = window.confirm("are you sure you want to delete this resource?");
+                            if (!response) {
                                 return;
                             }
                             await deleteFile(path, instance);

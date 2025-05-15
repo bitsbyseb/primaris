@@ -35,7 +35,7 @@ function App() {
   const { directory, openSearch, quickView } = context;
 
   return (
-    <div className='w-full min-h-screen bg-primary flex flex-col items-center space-y-5 pt-10'>
+    <div className='w-full min-h-[100dvh] bg-primary flex flex-col items-center space-y-5 pt-10'>
       <div className='flex justify-between w-full max-w-7xl px-5'>
         <h2 className='text-4xl text-secondary font-bold'>Primaris</h2>
         <button 
@@ -60,16 +60,20 @@ function App() {
       )}
 
       {directory && (
-        <section className='w-full h-full pb-10 px-5 grid grid-cols-3 gap-10 place-items-center'>
-          {directory.children.map((file) => (
+        <section className='w-full h-[100dvh] pb-10 px-5 gap-10 DirectoryContent'>
+          {directory.children.map((file) => {
+            if (file.name.startsWith(".")) {
+                return;
+            }
+            return (
             <FileElement 
               key={file.name} 
               isDirectory={file.isDirectory}
               filename={file.name}
               anchorID={file.name}
               instance={file}
-            />
-          ))}
+            />)
+          })}
         </section>
       )}
     </div>

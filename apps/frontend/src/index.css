@@ -13,6 +13,11 @@
     @apply text-xl font-bold py-2 text-primary bg-secondary border-4 px-2 active:border-secondary active:text-secondary active:bg-primary cursor-pointer active:scale-110 rounded-lg;
 }
 
+.DirectoryContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,28rem));
+}
+
 input[type="file"] {
     color:white;
 }
